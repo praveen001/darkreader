@@ -1,12 +1,12 @@
 {
     "manifest_version": 2,
-    "name": "Amagi Cloudport Dark Theme",
-    "version": "4.7.12",
+    "name": "Amagi's Playout Dark Theme",
+    "version": "1.0.0",
     "author": "Alexander Shutov",
     "description": "__MSG_extension_description__",
     "default_locale": "en",
     "browser_action": {
-        "default_title": "Amagi Cloudport Dark Theme",
+        "default_title": "Amagi's Playout Dark Theme",
         "default_icon": {
             "38": "icons/amagi_icon.png",
             "19": "icons/amagi_icon.png"

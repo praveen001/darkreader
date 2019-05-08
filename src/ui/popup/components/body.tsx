@@ -129,7 +129,7 @@ function Body(props: BodyProps) {
             <footer>
                 <div class="footer-buttons">
                     <Button onclick={openDevTools} class="dev-tools-button">
-                        🛠 {getLocalMessage('open_dev_tools')}
+                        {getLocalMessage('open_dev_tools')}
                     </Button>
                 </div>
             </footer>
