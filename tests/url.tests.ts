@@ -6,75 +6,75 @@ test('URL is enabled', () => {
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['google.com'], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['mail.google.com'], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['mail.google.*'], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['mail.google.*/mail'], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: [], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(true);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['google.com/maps'], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(true);
 
     // Invert listed only
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['google.com'], applyToListedOnly: true} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(true);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['google.*/mail'], applyToListedOnly: true} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(true);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: [], applyToListedOnly: true} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://mail.google.com/mail/u/0/',
         {siteList: ['google.com/maps'], applyToListedOnly: true} as UserSettings,
-        {isProtected: false, isInDarkList: false},
+        {isProtected: false, isInDarkList: false, isSupported: true},
     )).toBe(false);
 
     // Special URLs
     expect(isURLEnabled(
         'https://chrome.google.com/webstore',
         {siteList: ['chrome.google.com'], applyToListedOnly: false} as UserSettings,
-        {isProtected: true, isInDarkList: false},
+        {isProtected: true, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://chrome.google.com/webstore',
         {siteList: ['chrome.google.com'], applyToListedOnly: true} as UserSettings,
-        {isProtected: true, isInDarkList: false},
+        {isProtected: true, isInDarkList: false, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://darkreader.org/',
         {siteList: [], applyToListedOnly: false} as UserSettings,
-        {isProtected: false, isInDarkList: true},
+        {isProtected: false, isInDarkList: true, isSupported: true},
     )).toBe(false);
     expect(isURLEnabled(
         'https://darkreader.org/',
         {siteList: ['darkreader.org'], applyToListedOnly: true} as UserSettings,
-        {isProtected: false, isInDarkList: true},
+        {isProtected: false, isInDarkList: true, isSupported: true},
     )).toBe(true);
 });
