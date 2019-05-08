@@ -136,6 +136,12 @@ export class Extension {
                 this.setTheme({engine: next});
             }
         });
+
+        chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+            if (changeInfo.url) {
+                this.onSettingsChanged();
+            }
+        });
     }
 
     private async getShortcuts() {
@@ -299,13 +305,15 @@ export class Extension {
     //----------------------
 
     private getURLInfo(url: string): TabInfo {
-        const {DARK_SITES} = this.config;
+        const {DARK_SITES, SUPPORTED_SITES, UNSUPPORTED_SITES} = this.config;
         const isInDarkList = isURLInList(url, DARK_SITES);
+        const isSupported = isURLInList(url, SUPPORTED_SITES) && !isURLInList(url, UNSUPPORTED_SITES);
         const isProtected = !canInjectScript(url);
         return {
             url,
             isInDarkList,
-            isProtected,
+            isProtected: isProtected,
+            isSupported,
         };
     }
 
