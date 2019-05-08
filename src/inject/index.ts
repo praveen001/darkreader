@@ -31,10 +31,19 @@ function onMessage({type, data}) {
             removeDynamicTheme();
             break;
         }
+        case 'updates-for-ui': {
+            window.postMessage({
+                type: 'darkreader-ui-updates',
+                data
+            }, "*");
+        }
     }
 }
 
 const port = chrome.runtime.connect({name: 'tab'});
+port.postMessage({
+  type: 'subscribe-to-updates-for-ui'
+});
 port.onMessage.addListener(onMessage);
 port.onDisconnect.addListener(() => {
     logWarn('disconnect');

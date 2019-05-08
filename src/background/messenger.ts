@@ -19,17 +19,34 @@ interface ExtensionAdapter {
 
 export default class Messenger {
     private reporters: Set<(info: ExtensionData) => void>;
+    private ports: Set<chrome.runtime.Port>;
     private adapter: ExtensionAdapter;
 
     constructor(adapter: ExtensionAdapter) {
         this.reporters = new Set();
+        this.ports = new Set();
         this.adapter = adapter;
         chrome.runtime.onConnect.addListener((port) => {
             if (port.name === 'ui') {
                 port.onMessage.addListener((message) => this.onUIMessage(port, message));
                 this.adapter.onPopupOpen();
             }
+
+            if (port.name === 'tab') {
+                port.onMessage.addListener((message => this.onTabMessage(port, message)));
+            }
         });
+    }
+
+    private async onTabMessage(port: chrome.runtime.Port, { type, id, data}: Message) {
+        switch (type) {
+            case 'subscribe-to-updates-for-ui': {
+                this.ports.add(port);
+                port.onDisconnect.addListener(() => {
+                    this.ports.delete(port);
+                });
+            }
+        }
     }
 
     private async onUIMessage(port: chrome.runtime.Port, {type, id, data}: Message) {
@@ -103,5 +120,9 @@ export default class Messenger {
 
     reportChanges(data: ExtensionData) {
         this.reporters.forEach((report) => report(data));
+    }
+
+    getPorts() {
+        return this.ports;
     }
 }

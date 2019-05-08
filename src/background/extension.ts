@@ -45,6 +45,22 @@ export class Extension {
         });
         this.user = new UserStorage();
         this.awaiting = [];
+
+
+
+        chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => {
+            if (request) {
+                if (request.type === 'presence') {
+                    sendResponse({ presence: true, supported: this.getURLInfo(sender.url).isSupported, enabled: this.isEnabled(), darkMode: !isURLInList(sender.url, this.user.settings.siteList) });
+                }
+
+                if (request.type === "toggle") {
+                    this.toggleSitePattern(sender.url);
+                    sendResponse({ darkMode: !isURLInList(sender.url, this.user.settings.siteList) });
+                }
+            }
+            return true;
+        })
     }
 
     isEnabled() {
@@ -290,6 +306,17 @@ export class Extension {
         if (!this.ready) {
             return;
         }
+        
+        this.messenger.getPorts().forEach(port => {
+            port.postMessage({
+                type: 'updates-for-ui',
+                data:{
+                    presence: true,
+                    supported: this.getURLInfo(port.sender.url).isSupported,
+                    enabled: this.isEnabled(), darkMode: !isURLInList(port.sender.url, this.user.settings.siteList)
+                }
+            });
+        })
 
         this.wasEnabledOnLastCheck = this.isEnabled();
         this.tabs.sendMessage(this.getTabMessage);

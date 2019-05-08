@@ -57,5 +57,8 @@
         "switchEngine": {
             "description": "__MSG_theme_generation_mode__"
         }
+    },
+    "externally_connectable": {
+        "matches": ["http://localhost:3000/*", "*://*.amagi.tv/*"]
     }
 }
