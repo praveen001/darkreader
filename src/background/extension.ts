@@ -45,22 +45,15 @@ export class Extension {
         });
         this.user = new UserStorage();
         this.awaiting = [];
+    }
 
-
-
-        chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => {
-            if (request) {
-                if (request.type === 'presence') {
-                    sendResponse({ presence: true, supported: this.getURLInfo(sender.url).isSupported, enabled: this.isEnabled(), darkMode: !isURLInList(sender.url, this.user.settings.siteList) });
-                }
-
-                if (request.type === "toggle") {
-                    this.toggleSitePattern(sender.url);
-                    sendResponse({ darkMode: !isURLInList(sender.url, this.user.settings.siteList) });
-                }
-            }
-            return true;
-        })
+    getStatus = (url: string) => {
+        return {
+            presence: true,
+            supported: this.getURLInfo(url).isSupported,
+            enabled: this.isEnabled(),
+            darkMode: !isURLInList(url, this.user.settings.siteList)
+        };
     }
 
     isEnabled() {
@@ -124,6 +117,7 @@ export class Extension {
             resetDevInversionFixes: () => this.devtools.resetInversionFixes(),
             applyDevStaticThemes: (text) => this.devtools.applyStaticThemes(text),
             resetDevStaticThemes: () => this.devtools.resetStaticThemes(),
+            getStatus: (url: string) => this.getStatus(url),
         };
     }
 
@@ -306,24 +300,13 @@ export class Extension {
         if (!this.ready) {
             return;
         }
-        
-        this.messenger.getPorts().forEach(port => {
-            port.postMessage({
-                type: 'updates-for-ui',
-                data:{
-                    presence: true,
-                    supported: this.getURLInfo(port.sender.url).isSupported,
-                    enabled: this.isEnabled(), darkMode: !isURLInList(port.sender.url, this.user.settings.siteList)
-                }
-            });
-        })
 
+        this.messenger.reportChangesToContentScript();
         this.wasEnabledOnLastCheck = this.isEnabled();
         this.tabs.sendMessage(this.getTabMessage);
         this.saveUserSettings();
         this.reportChanges();
     }
-
 
     //----------------------
     //

@@ -31,7 +31,7 @@ function onMessage({type, data}) {
             removeDynamicTheme();
             break;
         }
-        case 'updates-for-ui': {
+        case 'darkreader-ui-updates': {
             window.postMessage({
                 type: 'darkreader-ui-updates',
                 data
@@ -41,11 +41,23 @@ function onMessage({type, data}) {
 }
 
 const port = chrome.runtime.connect({name: 'tab'});
-port.postMessage({
-  type: 'subscribe-to-updates-for-ui'
-});
 port.onMessage.addListener(onMessage);
 port.onDisconnect.addListener(() => {
     logWarn('disconnect');
     cleanDynamicThemeCache();
+});
+port.postMessage({
+    type: 'subscribe-to-updates-for-ui'
+});
+
+window.addEventListener('is-darkreader-installed', function() {
+    port.postMessage({
+        type: 'is-darkreader-installed'
+    })
+});
+
+window.addEventListener('darkreader-toggle-site', function() {
+    port.postMessage({
+        type: 'darkreader-toggle-site'
+    })
 });

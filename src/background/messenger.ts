@@ -15,6 +15,7 @@ interface ExtensionAdapter {
     resetDevInversionFixes: () => void;
     applyDevStaticThemes: (text: string) => Error;
     resetDevStaticThemes: () => void;
+    getStatus: (url: string) => any;
 }
 
 export default class Messenger {
@@ -45,6 +46,17 @@ export default class Messenger {
                 port.onDisconnect.addListener(() => {
                     this.ports.delete(port);
                 });
+            }
+
+            case 'is-darkreader-installed': {
+                port.postMessage({
+                    type: 'darkreader-ui-updates',
+                    data: this.adapter.getStatus(port.sender.url)
+                });
+            }
+
+            case 'darkreader-toggle-site': {
+                this.adapter.toggleSitePattern(port.sender.url);
             }
         }
     }
@@ -120,6 +132,13 @@ export default class Messenger {
 
     reportChanges(data: ExtensionData) {
         this.reporters.forEach((report) => report(data));
+    }
+
+    reportChangesToContentScript() {
+        this.ports.forEach(port => port.postMessage({
+            type: 'darkreader-ui-updates',
+            data: this.adapter.getStatus(port.sender.url)
+        }));
     }
 
     getPorts() {
