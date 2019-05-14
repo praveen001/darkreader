@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Amagi's Playout Dark Theme",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "author": "Alexander Shutov",
     "description": "__MSG_extension_description__",
     "default_locale": "en",
