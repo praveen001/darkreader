@@ -103,9 +103,10 @@ export function isURLEnabled(url: string, userSettings: UserSettings, {isProtect
     if (!isSupported) {
         return false;
     }
-    const isURLInUserList = isURLInList(url, userSettings.siteList);
-    if (userSettings.applyToListedOnly) {
-        return isURLInUserList;
-    }
-    return (!isInDarkList && !isURLInUserList);
+    //const isURLInUserList = isURLInList(url, userSettings.siteList);
+    //if (userSettings.applyToListedOnly) {
+    //    return isURLInUserList;
+    //}
+    //return (!isInDarkList && !isURLInUserList);
+    return true;
 }
