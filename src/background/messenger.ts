@@ -1,4 +1,5 @@
 import {ExtensionData, FilterConfig, TabInfo, Message, UserSettings} from '../definitions';
+import { getURLHost } from 'utils/url';
 
 interface ExtensionAdapter {
     collect: () => Promise<ExtensionData>;
@@ -46,6 +47,7 @@ export default class Messenger {
                 port.onDisconnect.addListener(() => {
                     this.ports.delete(port);
                 });
+                break;
             }
 
             case 'is-darkreader-installed': {
@@ -53,10 +55,12 @@ export default class Messenger {
                     type: 'darkreader-ui-updates',
                     data: this.adapter.getStatus(port.sender.url)
                 });
+                break;
             }
 
             case 'darkreader-toggle-site': {
-                this.adapter.toggleSitePattern(port.sender.url);
+                this.adapter.toggleSitePattern(getURLHost(port.sender.url || ''));
+                break;
             }
         }
     }
