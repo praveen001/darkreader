@@ -8,27 +8,27 @@ import {InversionFix, StaticTheme, DynamicThemeFix} from '../definitions';
 
 const CONFIG_URLs = {
     darkSites: {
-        remote: 'https://raw.githubusercontent.com/praveen001/darkreader/master/src/config/dark-sites.config',
+        remote: 'https://raw.githubusercontent.com/amagimedia/darkreader/master/src/config/dark-sites.config',
         local: '../config/dark-sites.config',
     },
     unsupportedSites: {
-        remote: 'https://raw.githubusercontent.com/praveen001/darkreader/master/src/config/unsupported-sites.config',
+        remote: 'https://raw.githubusercontent.com/amagimedia/darkreader/master/src/config/unsupported-sites.config',
         local: '../config/unsupported-sites.config',
     },
     supportedSites: {
-        remote: 'https://raw.githubusercontent.com/praveen001/darkreader/master/src/config/supported-sites.config',
+        remote: 'https://raw.githubusercontent.com/amagimedia/darkreader/master/src/config/supported-sites.config',
         local: '../config/supported-sites.config',
     },
     dynamicThemeFixes: {
-        remote: 'https://raw.githubusercontent.com/praveen001/darkreader/master/src/config/dynamic-theme-fixes.config',
+        remote: 'https://raw.githubusercontent.com/amagimedia/darkreader/master/src/config/dynamic-theme-fixes.config',
         local: '../config/dynamic-theme-fixes.config',
     },
     inversionFixes: {
-        remote: 'https://raw.githubusercontent.com/praveen001/darkreader/master/src/config/inversion-fixes.config',
+        remote: 'https://raw.githubusercontent.com/amagimedia/darkreader/master/src/config/inversion-fixes.config',
         local: '../config/inversion-fixes.config',
     },
     staticThemes: {
-        remote: 'https://raw.githubusercontent.com/praveen001/darkreader/master/src/config/static-themes.config',
+        remote: 'https://raw.githubusercontent.com/amagimedia/darkreader/master/src/config/static-themes.config',
         local: '../config/static-themes.config',
     },
 };
